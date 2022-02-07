@@ -5,6 +5,7 @@ using CoreEscuela.Entidades;
 
 namespace CoreEscuela
 {
+    // sealed: not inheritance but we can create instances
     public sealed class EscuelaEngine
     {
         public Escuela Escuela { get; set; }
