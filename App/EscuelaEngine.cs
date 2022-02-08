@@ -17,7 +17,7 @@ namespace CoreEscuela
 
         public void Inicializar()
         {
-            Escuela = new Escuela("Platzi Academay", 2012, TiposEscuela.Primaria,
+            Escuela = new Escuela("Platzi Academy", 2012, TiposEscuela.Primaria,
             ciudad: "Bogotá", pais: "Colombia"
             );
 
@@ -26,6 +26,28 @@ namespace CoreEscuela
             CargarEvaluaciones();
 
         }
+
+        public List<ObjetoEscuelaBase> GetObjetosEscuela()
+        {
+            var listaObj = new List<ObjetoEscuelaBase>();
+            listaObj.Add(Escuela);
+            listaObj.AddRange(Escuela.Cursos);
+
+            foreach (var curso in Escuela.Cursos)
+            {
+                listaObj.AddRange(curso.Asignaturas);
+                listaObj.AddRange(curso.Alumnos);
+
+                foreach (var alumno in curso.Alumnos)
+                {
+                    listaObj.AddRange(alumno.Evaluaciones);
+                }
+            }
+
+            return listaObj;
+        }
+
+        #region Metodos de Carga
 
         private void CargarEvaluaciones()
         {
@@ -53,27 +75,7 @@ namespace CoreEscuela
                 }
             }
 
-        }
-
-        public List<ObjetoEscuelaBase> GetObjetosEscuela()
-        {
-            var listaObj = new List<ObjetoEscuelaBase>();
-            listaObj.Add(Escuela);
-            listaObj.AddRange(Escuela.Cursos);
-
-            foreach (var curso in Escuela.Cursos)
-            {
-                listaObj.AddRange(curso.Asignaturas);
-                listaObj.AddRange(curso.Alumnos);
-
-                foreach (var alumno in curso.Alumnos)
-                {
-                    listaObj.AddRange(alumno.Evaluaciones);
-                }
-            }
-
-            return listaObj;
-        }
+        }        
 
         private void CargarAsignaturas()
         {
@@ -120,5 +122,7 @@ namespace CoreEscuela
                 c.Alumnos = GenerarAlumnosAlAzar(cantRandom);
             }
         }
+
+        #endregion
     }
 }

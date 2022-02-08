@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CoreEscuela.Entidades;
 using CoreEscuela.Util;
+using Etapa5.Entidades;
 using static System.Console;
 
 namespace CoreEscuela
@@ -33,6 +35,9 @@ namespace CoreEscuela
             WriteLine($"Alumno: {ob.Nombre}");
             WriteLine($"Alumno: {ob.UniqueId}");
             WriteLine($"Alumno: {ob.GetType()}");
+
+            var listaIlugar = listaObjetos.Where(x => x is ILugar).ToList();
+            engine.Escuela.LimpiarLugar();
         }
 
         private static void ImpimirCursosEscuela(Escuela escuela)
