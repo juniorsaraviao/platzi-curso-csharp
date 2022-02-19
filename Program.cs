@@ -12,34 +12,66 @@ namespace CoreEscuela
     {
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
+            AppDomain.CurrentDomain.ProcessExit += (s,e) => Printer.Beep(2000,1000,1);
             var engine = new EscuelaEngine();
             engine.Inicializar();
             Printer.WriteTitle("BIENVENIDOS A LA ESCUELA");
             //Printer.Beep(10000, cantidad: 10);
-            ImpimirCursosEscuela(engine.Escuela);
-            var listaObjetos = engine.GetObjetosEscuela();
+            //ImpimirCursosEscuela(engine.Escuela);
+            var listaObjetos = engine.GetObjetosEscuela( out int conteoEvaluaciones,
+                                                         out int conteoAlumnos,
+                                                         out int conteoAsignaturas,
+                                                         out int conteoCursos );
             
-            Printer.DrawLine(10);
-            Printer.WriteTitle("Pruebas de polimorfismo");
+            var dictmp = engine.GetDiccionarioObjectos();
+            engine.ImprimirDiccionario(dictmp, true);
+         
+            //Dictionary<int, string> diccionario = new Dictionary<int, string>();
+            //diccionario.Add(10, "Random");
+            //diccionario.Add(23, "Lorem ipsum");
 
-            var studentTest = new Alumno { Nombre = "Claire Underwood" };
+            //foreach(var keyValPair in diccionario)
+            //{
+            //   WriteLine($"Key: {keyValPair.Key} Valor: {keyValPair.Value}");
+            //}
+
+            //Printer.WriteTitle("Acceso a diccionario");
+            //WriteLine(diccionario[23]);
+
+            //Printer.WriteTitle("Otro diccionario");
+            //var dic = new Dictionary<string, string>();
+            //dic["Luna"] = "Cuerpo celeste que gira alrededor de la tierra";
+            //WriteLine(dic["Luna"]);            
             
-            ObjetoEscuelaBase ob = studentTest;
+            //Printer.DrawLine(10);
+            //Printer.WriteTitle("Pruebas de polimorfismo");
 
-            Printer.WriteTitle("Alumno");
-            WriteLine($"Alumno: {studentTest.Nombre}");
-            WriteLine($"Alumno: {studentTest.UniqueId}");
-            WriteLine($"Alumno: {studentTest.GetType()}");
+            //var studentTest = new Alumno { Nombre = "Claire Underwood" };
+            
+            //ObjetoEscuelaBase ob = studentTest;
 
-            Printer.WriteTitle("ObjetoEscuelaBase");
-            WriteLine($"Alumno: {ob.Nombre}");
-            WriteLine($"Alumno: {ob.UniqueId}");
-            WriteLine($"Alumno: {ob.GetType()}");
+            //Printer.WriteTitle("Alumno");
+            //WriteLine($"Alumno: {studentTest.Nombre}");
+            //WriteLine($"Alumno: {studentTest.UniqueId}");
+            //WriteLine($"Alumno: {studentTest.GetType()}");
 
-            var listaIlugar = listaObjetos.Where(x => x is ILugar).ToList();
-            engine.Escuela.LimpiarLugar();
+            //Printer.WriteTitle("ObjetoEscuelaBase");
+            //WriteLine($"Alumno: {ob.Nombre}");
+            //WriteLine($"Alumno: {ob.UniqueId}");
+            //WriteLine($"Alumno: {ob.GetType()}");
+
+            //var listaIlugar = listaObjetos.Where(x => x is ILugar).ToList();
+            //engine.Escuela.LimpiarLugar();
         }
 
+        private static void AccionDelEvento(object sender, EventArgs e)
+        {
+            Printer.WriteTitle("SALIENDO");
+            Printer.Beep(3000, 1000, 3);
+            Printer.WriteTitle("SALIÓ");
+        }
+        
         private static void ImpimirCursosEscuela(Escuela escuela)
         {
 
