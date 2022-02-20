@@ -5,7 +5,7 @@ using CoreEscuela.Entidades;
 using CoreEscuela.Util;
 using Etapa5.Entidades;
 
-namespace CoreEscuela
+namespace CoreEscuela.App
 {
     // sealed: not inheritance but we can create instances
     public sealed class EscuelaEngine
